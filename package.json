@@ -1,5 +1,5 @@
 {
-  "name": "@ciaranreen/nate-core",
+  "name": "@get-nate/core",
   "author": "teamnate",
   "license": "ISC",
   "version": "1.0.0",
@@ -20,7 +20,7 @@
     "zod": "^3.21.4"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com"
   },
   "devDependencies": {
     "@types/jest": "^29.5.2",
@@ -34,6 +34,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ciaranreen/nate-core.git"
+    "url": "git+https://github.com/get-nate/core.git"
   }
 }
