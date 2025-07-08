@@ -346,4 +346,3 @@ Data: ${JSON.stringify(lastActivity.data, null, 2)}
 ContextFormatter.MAX_CONTEXT_TOKENS = 8000; // Conservative limit for GPT-4
 ContextFormatter.SYSTEM_PROMPT_TOKENS = 1000; // Estimated tokens for system prompt
 ContextFormatter.RESPONSE_BUFFER_TOKENS = 1000; // Buffer for response
-//# sourceMappingURL=context-formatter.js.map

@@ -19,4 +19,16 @@ export {
 AutomationEngine, WearableDeviceSchema, AutomationRuleSchema, } from "./automation-engine";
 // Integrated Nate AI System
 export { NateAICore, } from "./nate-ai-core";
-//# sourceMappingURL=index.js.map
+export * from "./services";
+// Services
+export { CacheService } from "./services/CacheService";
+export { PlanTemplateService } from "./services/PlanTemplateService";
+export { PlanTemplateGenerator } from "./services/PlanTemplateGenerator";
+export { PlanLibraryService } from "./services/PlanLibraryService";
+export { VisualizationService } from "./services/VisualizationService";
+export { MemoryPersistenceService } from "./services/MemoryPersistenceService";
+export { PrivacyManager } from "./services/PrivacyManager";
+export { NateScoringEngine } from "./services/NateScoringEngine";
+export * from "./services/OpenAI";
+// Interfaces
+export * from "./interfaces";

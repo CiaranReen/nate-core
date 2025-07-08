@@ -159,4 +159,3 @@ export declare class NutritionCalculations {
         sources: string[];
     }>;
 }
-//# sourceMappingURL=calculations.d.ts.map

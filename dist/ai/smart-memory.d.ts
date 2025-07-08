@@ -6,8 +6,23 @@
  * that competitors using GPT alone cannot replicate.
  */
 import { z } from "zod";
+import { MemoryPersistenceService } from "./services/MemoryPersistenceService";
+import { NateScoringEngine } from "./services/NateScoringEngine";
+import { PlanTemplateGenerator } from "./services/PlanTemplateGenerator";
+import { VisualizationService } from "./services/VisualizationService";
+import { PrivacyManager } from "./services/PrivacyManager";
+import { CacheService } from "./services/CacheService";
 export interface UserMemoryProfile {
     userId: string;
+    workoutHistory: {
+        date: string;
+        type: string;
+        duration: number;
+        intensity: number;
+        completed: boolean;
+    }[];
+    fitnessGoals: string[];
+    fitnessLevel: "beginner" | "intermediate" | "advanced";
     personalityProfile: PersonalityProfile;
     behaviorPatterns: BehaviorPatterns;
     preferences: UserPreferences;
@@ -300,37 +315,30 @@ export interface BreakthroughStrategy {
 }
 export declare class SmartMemoryEngine {
     private memoryProfiles;
-    constructor();
-    /**
-     * Create or update a user's memory profile
-     */
+    private persistenceService;
+    private scoringEngine;
+    private planGenerator;
+    private visualizationService;
+    private privacyManager;
+    private cacheService;
+    constructor(persistenceService: MemoryPersistenceService, scoringEngine: NateScoringEngine, planGenerator: PlanTemplateGenerator, visualizationService: VisualizationService, privacyManager: PrivacyManager, cacheService: CacheService);
     updateMemoryProfile(userId: string, updates: Partial<UserMemoryProfile>): Promise<void>;
-    /**
-     * Get user's complete memory profile
-     */
     getMemoryProfile(userId: string): Promise<UserMemoryProfile | null>;
-    /**
-     * Learn from user interaction and update memory
-     */
     learnFromInteraction(userId: string, interaction: {
         type: "workout_completed" | "workout_skipped" | "goal_changed" | "feedback_given" | "adaptation_applied";
         data: any;
         userResponse: any;
         context: any;
     }): Promise<void>;
-    /**
-     * Generate contextual insights for AI responses
-     */
     generateContextualInsights(userId: string, currentContext: string): Promise<ContextualInsights>;
-    /**
-     * Predict user needs based on patterns
-     */
     predictUserNeeds(userId: string, timeHorizon: "immediate" | "short_term" | "medium_term"): Promise<PredictedNeeds>;
+    calculateNateSignatureScores(userId: string): Promise<NateSignatureScores>;
+    generateMemoryDrivenPlanTemplate(userId: string, goal: string, timeframe: string): Promise<MemoryDrivenPlanTemplate>;
+    updateReinforcementLearningProfile(userId: string, ruleName: string, outcome: "success" | "failure", context: string, userSatisfaction?: number): Promise<void>;
+    updatePrivacySettings(userId: string, settings: Partial<PrivacySettings>): Promise<void>;
+    generateUserVisualizationData(userId: string): Promise<UserVisualizationData>;
     private createDefaultProfile;
-    private persistMemoryProfile;
-    private loadMemoryProfile;
     private updateWorkoutPatterns;
-    private updateFailurePatterns;
     private updateGoalEvolution;
     private updatePreferences;
     private updateAdaptationHistory;
@@ -341,81 +349,10 @@ export declare class SmartMemoryEngine {
     private identifyRiskFactors;
     private identifyOpportunities;
     private getRelevantHistory;
-    private getDefaultInsights;
+    private predictImmediateNeeds;
+    private predictShortTermNeeds;
+    private predictMediumTermNeeds;
     private explainPredictions;
-    /**
-     * 1️⃣ Calculate Nate Signature Composite Scores
-     */
-    calculateNateSignatureScores(userId: string): Promise<NateSignatureScores>;
-    /**
-     * 2️⃣ Generate Memory-Driven Plan Template
-     */
-    generateMemoryDrivenPlanTemplate(userId: string, goal: string, timeframe: string): Promise<MemoryDrivenPlanTemplate>;
-    /**
-     * 3️⃣ Update Reinforcement Learning Profile
-     */
-    updateReinforcementLearningProfile(userId: string, ruleName: string, outcome: "success" | "failure", context: string, userSatisfaction?: number): Promise<void>;
-    /**
-     * 4️⃣ Manage Privacy Settings
-     */
-    updatePrivacySettings(userId: string, settings: Partial<PrivacySettings>): Promise<void>;
-    /**
-     * 5️⃣ Generate User Visualization Data
-     */
-    generateUserVisualizationData(userId: string): Promise<UserVisualizationData>;
-    private calculateNateRecoveryQuotient;
-    private calculateNateAdherenceIndex;
-    private calculateNateMotivationStability;
-    private calculateNateLearningQuotient;
-    private calculateNateResilienceScore;
-    private analyzeWorkoutTypePreferences;
-    private determineOptimalRotation;
-    private determineProgressionStyle;
-    private determineRecoveryApproach;
-    private determineMotivationIntegration;
-    private generateCustomizations;
-    private calculateSuccessMetrics;
-    private generateMemoryReasoning;
-    private getReinforcementLearningProfile;
-    private persistReinforcementLearningProfile;
-    private getPrivacySettings;
-    private persistPrivacySettings;
-    private generateProfileOverview;
-    private analyzeUserCycles;
-    private generateAIInsights;
-    private generateProgressVisualization;
-    private generateImprovementRecommendations;
-    private generateRecoveryRecommendations;
-    private identifyAdherenceRiskFactors;
-    private determineMotivationPhase;
-    private predictNextMotivationPhase;
-    private determineLearningStyle;
-    private determineOptimalTeachingMethods;
-    private determineResilienceType;
-    private identifySupportNeeds;
-    private findExerciseAlternatives;
-    private determinePersonalityType;
-    private identifyUniqueTraits;
-    private identifySignatureCharacteristics;
-    private identifyUserStrengths;
-    private identifyUserChallenges;
-    private identifyGrowthAreas;
-    private extractMotivationCycles;
-    private extractAdherenceCycles;
-    private extractSeasonalPatterns;
-    private extractWeeklyPatterns;
-    private detectStrengths;
-    private detectChallenges;
-    private detectBehavioralPatterns;
-    private generatePredictiveInsights;
-    private generateProgressTimeline;
-    private extractMilestoneAchievements;
-    private extractSkillDevelopment;
-    private calculateTransformationMetrics;
-    private generateImmediateActions;
-    private generateShortTermGoals;
-    private generateLongTermStrategies;
-    private generateHabitFormation;
 }
 export interface ContextualInsights {
     personalityMatch: number;
@@ -907,6 +844,27 @@ export interface HabitFormation {
 }
 export declare const UserMemoryProfileSchema: z.ZodObject<{
     userId: z.ZodString;
+    workoutHistory: z.ZodArray<z.ZodObject<{
+        date: z.ZodString;
+        type: z.ZodString;
+        duration: z.ZodNumber;
+        intensity: z.ZodNumber;
+        completed: z.ZodBoolean;
+    }, "strip", z.ZodTypeAny, {
+        completed: boolean;
+        type: string;
+        date: string;
+        duration: number;
+        intensity: number;
+    }, {
+        completed: boolean;
+        type: string;
+        date: string;
+        duration: number;
+        intensity: number;
+    }>, "many">;
+    fitnessGoals: z.ZodArray<z.ZodString, "many">;
+    fitnessLevel: z.ZodEnum<["beginner", "intermediate", "advanced"]>;
     personalityProfile: z.ZodObject<{
         motivationType: z.ZodEnum<["intrinsic", "extrinsic", "mixed"]>;
         goalOrientation: z.ZodEnum<["process", "outcome", "balanced"]>;
@@ -918,21 +876,21 @@ export declare const UserMemoryProfileSchema: z.ZodObject<{
         persistenceLevel: z.ZodNumber;
         openToChange: z.ZodNumber;
     }, "strip", z.ZodTypeAny, {
-        motivationType: "intrinsic" | "extrinsic" | "mixed";
-        goalOrientation: "process" | "outcome" | "balanced";
-        communicationPreference: "direct" | "supportive" | "analytical" | "encouraging";
-        challengeLevel: "conservative" | "moderate" | "aggressive";
-        feedbackStyle: "detailed" | "brief" | "visual" | "comparative";
+        communicationPreference: "analytical" | "direct" | "supportive" | "encouraging";
+        motivationType: "mixed" | "intrinsic" | "extrinsic";
+        goalOrientation: "balanced" | "process" | "outcome";
+        challengeLevel: "moderate" | "conservative" | "aggressive";
+        feedbackStyle: "visual" | "detailed" | "brief" | "comparative";
         timeHorizon: "short_term" | "medium_term" | "long_term";
         riskTolerance: number;
         persistenceLevel: number;
         openToChange: number;
     }, {
-        motivationType: "intrinsic" | "extrinsic" | "mixed";
-        goalOrientation: "process" | "outcome" | "balanced";
-        communicationPreference: "direct" | "supportive" | "analytical" | "encouraging";
-        challengeLevel: "conservative" | "moderate" | "aggressive";
-        feedbackStyle: "detailed" | "brief" | "visual" | "comparative";
+        communicationPreference: "analytical" | "direct" | "supportive" | "encouraging";
+        motivationType: "mixed" | "intrinsic" | "extrinsic";
+        goalOrientation: "balanced" | "process" | "outcome";
+        challengeLevel: "moderate" | "conservative" | "aggressive";
+        feedbackStyle: "visual" | "detailed" | "brief" | "comparative";
         timeHorizon: "short_term" | "medium_term" | "long_term";
         riskTolerance: number;
         persistenceLevel: number;
@@ -941,31 +899,48 @@ export declare const UserMemoryProfileSchema: z.ZodObject<{
     lastUpdated: z.ZodDate;
 }, "strip", z.ZodTypeAny, {
     userId: string;
+    lastUpdated: Date;
+    workoutHistory: {
+        completed: boolean;
+        type: string;
+        date: string;
+        duration: number;
+        intensity: number;
+    }[];
+    fitnessGoals: string[];
+    fitnessLevel: "beginner" | "intermediate" | "advanced";
     personalityProfile: {
-        motivationType: "intrinsic" | "extrinsic" | "mixed";
-        goalOrientation: "process" | "outcome" | "balanced";
-        communicationPreference: "direct" | "supportive" | "analytical" | "encouraging";
-        challengeLevel: "conservative" | "moderate" | "aggressive";
-        feedbackStyle: "detailed" | "brief" | "visual" | "comparative";
+        communicationPreference: "analytical" | "direct" | "supportive" | "encouraging";
+        motivationType: "mixed" | "intrinsic" | "extrinsic";
+        goalOrientation: "balanced" | "process" | "outcome";
+        challengeLevel: "moderate" | "conservative" | "aggressive";
+        feedbackStyle: "visual" | "detailed" | "brief" | "comparative";
         timeHorizon: "short_term" | "medium_term" | "long_term";
         riskTolerance: number;
         persistenceLevel: number;
         openToChange: number;
     };
-    lastUpdated: Date;
 }, {
     userId: string;
+    lastUpdated: Date;
+    workoutHistory: {
+        completed: boolean;
+        type: string;
+        date: string;
+        duration: number;
+        intensity: number;
+    }[];
+    fitnessGoals: string[];
+    fitnessLevel: "beginner" | "intermediate" | "advanced";
     personalityProfile: {
-        motivationType: "intrinsic" | "extrinsic" | "mixed";
-        goalOrientation: "process" | "outcome" | "balanced";
-        communicationPreference: "direct" | "supportive" | "analytical" | "encouraging";
-        challengeLevel: "conservative" | "moderate" | "aggressive";
-        feedbackStyle: "detailed" | "brief" | "visual" | "comparative";
+        communicationPreference: "analytical" | "direct" | "supportive" | "encouraging";
+        motivationType: "mixed" | "intrinsic" | "extrinsic";
+        goalOrientation: "balanced" | "process" | "outcome";
+        challengeLevel: "moderate" | "conservative" | "aggressive";
+        feedbackStyle: "visual" | "detailed" | "brief" | "comparative";
         timeHorizon: "short_term" | "medium_term" | "long_term";
         riskTolerance: number;
         persistenceLevel: number;
         openToChange: number;
     };
-    lastUpdated: Date;
 }>;
-//# sourceMappingURL=smart-memory.d.ts.map

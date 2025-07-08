@@ -333,23 +333,23 @@ export declare const WearableDeviceSchema: z.ZodObject<{
         dataRetention: number;
         autoAnalysis: boolean;
         triggerNotifications: boolean;
-        privacyLevel: "minimal" | "comprehensive" | "standard";
+        privacyLevel: "standard" | "minimal" | "comprehensive";
     }, {
         syncFrequency: "daily" | "real_time" | "hourly";
         dataRetention: number;
         autoAnalysis: boolean;
         triggerNotifications: boolean;
-        privacyLevel: "minimal" | "comprehensive" | "standard";
+        privacyLevel: "standard" | "minimal" | "comprehensive";
     }>;
 }, "strip", z.ZodTypeAny, {
-    userId: string;
     id: string;
+    userId: string;
     model: string;
+    dataTypes: ("weight" | "distance" | "heart_rate" | "steps" | "calories_burned" | "sleep_data" | "workout_sessions" | "stress_levels" | "hrv" | "spo2" | "body_temperature" | "body_fat" | "blood_pressure" | "glucose_levels" | "recovery_metrics")[];
     deviceType: "smartwatch" | "fitness_tracker" | "heart_rate_monitor" | "smart_scale" | "sleep_tracker" | "blood_pressure_monitor" | "continuous_glucose_monitor";
     brand: string;
     connectionStatus: "connected" | "disconnected" | "syncing" | "error";
     lastSyncTime: Date;
-    dataTypes: ("weight" | "distance" | "heart_rate" | "steps" | "calories_burned" | "sleep_data" | "workout_sessions" | "stress_levels" | "hrv" | "spo2" | "body_temperature" | "body_fat" | "blood_pressure" | "glucose_levels" | "recovery_metrics")[];
     permissions: {
         dataType: string;
         granted: boolean;
@@ -361,17 +361,17 @@ export declare const WearableDeviceSchema: z.ZodObject<{
         dataRetention: number;
         autoAnalysis: boolean;
         triggerNotifications: boolean;
-        privacyLevel: "minimal" | "comprehensive" | "standard";
+        privacyLevel: "standard" | "minimal" | "comprehensive";
     };
 }, {
-    userId: string;
     id: string;
+    userId: string;
     model: string;
+    dataTypes: ("weight" | "distance" | "heart_rate" | "steps" | "calories_burned" | "sleep_data" | "workout_sessions" | "stress_levels" | "hrv" | "spo2" | "body_temperature" | "body_fat" | "blood_pressure" | "glucose_levels" | "recovery_metrics")[];
     deviceType: "smartwatch" | "fitness_tracker" | "heart_rate_monitor" | "smart_scale" | "sleep_tracker" | "blood_pressure_monitor" | "continuous_glucose_monitor";
     brand: string;
     connectionStatus: "connected" | "disconnected" | "syncing" | "error";
     lastSyncTime: Date;
-    dataTypes: ("weight" | "distance" | "heart_rate" | "steps" | "calories_burned" | "sleep_data" | "workout_sessions" | "stress_levels" | "hrv" | "spo2" | "body_temperature" | "body_fat" | "blood_pressure" | "glucose_levels" | "recovery_metrics")[];
     permissions: {
         dataType: string;
         granted: boolean;
@@ -383,7 +383,7 @@ export declare const WearableDeviceSchema: z.ZodObject<{
         dataRetention: number;
         autoAnalysis: boolean;
         triggerNotifications: boolean;
-        privacyLevel: "minimal" | "comprehensive" | "standard";
+        privacyLevel: "standard" | "minimal" | "comprehensive";
     };
 }>;
 export declare const AutomationRuleSchema: z.ZodObject<{
@@ -403,12 +403,12 @@ export declare const AutomationRuleSchema: z.ZodObject<{
         }, "strip", z.ZodTypeAny, {
             value: number | number[];
             metric: string;
-            operator: "gt" | "lt" | "eq" | "gte" | "lte" | "between" | "outside";
+            operator: "lt" | "gt" | "eq" | "lte" | "gte" | "between" | "outside";
             duration?: number | undefined;
         }, {
             value: number | number[];
             metric: string;
-            operator: "gt" | "lt" | "eq" | "gte" | "lte" | "between" | "outside";
+            operator: "lt" | "gt" | "eq" | "lte" | "gte" | "between" | "outside";
             duration?: number | undefined;
         }>;
         timeConstraints: z.ZodOptional<z.ZodArray<z.ZodObject<{
@@ -444,11 +444,11 @@ export declare const AutomationRuleSchema: z.ZodObject<{
         }>, "many">>;
     }, "strip", z.ZodTypeAny, {
         type: "value_threshold" | "trend_change" | "pattern_break" | "time_based" | "event_based" | "combination";
-        source: "wearable_data" | "user_input" | "app_behavior" | "external_api" | "calendar" | "weather" | "location";
+        source: "user_input" | "wearable_data" | "app_behavior" | "external_api" | "calendar" | "weather" | "location";
         threshold: {
             value: number | number[];
             metric: string;
-            operator: "gt" | "lt" | "eq" | "gte" | "lte" | "between" | "outside";
+            operator: "lt" | "gt" | "eq" | "lte" | "gte" | "between" | "outside";
             duration?: number | undefined;
         };
         timeConstraints?: {
@@ -462,11 +462,11 @@ export declare const AutomationRuleSchema: z.ZodObject<{
         }[] | undefined;
     }, {
         type: "value_threshold" | "trend_change" | "pattern_break" | "time_based" | "event_based" | "combination";
-        source: "wearable_data" | "user_input" | "app_behavior" | "external_api" | "calendar" | "weather" | "location";
+        source: "user_input" | "wearable_data" | "app_behavior" | "external_api" | "calendar" | "weather" | "location";
         threshold: {
             value: number | number[];
             metric: string;
-            operator: "gt" | "lt" | "eq" | "gte" | "lte" | "between" | "outside";
+            operator: "lt" | "gt" | "eq" | "lte" | "gte" | "between" | "outside";
             duration?: number | undefined;
         };
         timeConstraints?: {
@@ -488,12 +488,12 @@ export declare const AutomationRuleSchema: z.ZodObject<{
             timeWindow: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             metric: string;
-            operator: "gt" | "lt" | "eq" | "gte" | "lte" | "contains" | "exists";
+            operator: "lt" | "gt" | "eq" | "lte" | "gte" | "contains" | "exists";
             value?: any;
             timeWindow?: number | undefined;
         }, {
             metric: string;
-            operator: "gt" | "lt" | "eq" | "gte" | "lte" | "contains" | "exists";
+            operator: "lt" | "gt" | "eq" | "lte" | "gte" | "contains" | "exists";
             value?: any;
             timeWindow?: number | undefined;
         }>, "many">;
@@ -501,7 +501,7 @@ export declare const AutomationRuleSchema: z.ZodObject<{
         type: "and" | "or" | "not";
         rules: {
             metric: string;
-            operator: "gt" | "lt" | "eq" | "gte" | "lte" | "contains" | "exists";
+            operator: "lt" | "gt" | "eq" | "lte" | "gte" | "contains" | "exists";
             value?: any;
             timeWindow?: number | undefined;
         }[];
@@ -509,7 +509,7 @@ export declare const AutomationRuleSchema: z.ZodObject<{
         type: "and" | "or" | "not";
         rules: {
             metric: string;
-            operator: "gt" | "lt" | "eq" | "gte" | "lte" | "contains" | "exists";
+            operator: "lt" | "gt" | "eq" | "lte" | "gte" | "contains" | "exists";
             value?: any;
             timeWindow?: number | undefined;
         }[];
@@ -555,20 +555,20 @@ export declare const AutomationRuleSchema: z.ZodObject<{
     successRate: z.ZodNumber;
     userSatisfaction: z.ZodNumber;
 }, "strip", z.ZodTypeAny, {
-    userId: string;
     id: string;
     name: string;
-    priority: "high" | "medium" | "low" | "critical";
+    userId: string;
+    priority: "critical" | "high" | "medium" | "low";
     successRate: number;
     userSatisfaction: number;
     isActive: boolean;
     triggers: {
         type: "value_threshold" | "trend_change" | "pattern_break" | "time_based" | "event_based" | "combination";
-        source: "wearable_data" | "user_input" | "app_behavior" | "external_api" | "calendar" | "weather" | "location";
+        source: "user_input" | "wearable_data" | "app_behavior" | "external_api" | "calendar" | "weather" | "location";
         threshold: {
             value: number | number[];
             metric: string;
-            operator: "gt" | "lt" | "eq" | "gte" | "lte" | "between" | "outside";
+            operator: "lt" | "gt" | "eq" | "lte" | "gte" | "between" | "outside";
             duration?: number | undefined;
         };
         timeConstraints?: {
@@ -585,7 +585,7 @@ export declare const AutomationRuleSchema: z.ZodObject<{
         type: "and" | "or" | "not";
         rules: {
             metric: string;
-            operator: "gt" | "lt" | "eq" | "gte" | "lte" | "contains" | "exists";
+            operator: "lt" | "gt" | "eq" | "lte" | "gte" | "contains" | "exists";
             value?: any;
             timeWindow?: number | undefined;
         }[];
@@ -603,20 +603,20 @@ export declare const AutomationRuleSchema: z.ZodObject<{
     cooldownPeriod: number;
     lastTriggered?: Date | undefined;
 }, {
-    userId: string;
     id: string;
     name: string;
-    priority: "high" | "medium" | "low" | "critical";
+    userId: string;
+    priority: "critical" | "high" | "medium" | "low";
     successRate: number;
     userSatisfaction: number;
     isActive: boolean;
     triggers: {
         type: "value_threshold" | "trend_change" | "pattern_break" | "time_based" | "event_based" | "combination";
-        source: "wearable_data" | "user_input" | "app_behavior" | "external_api" | "calendar" | "weather" | "location";
+        source: "user_input" | "wearable_data" | "app_behavior" | "external_api" | "calendar" | "weather" | "location";
         threshold: {
             value: number | number[];
             metric: string;
-            operator: "gt" | "lt" | "eq" | "gte" | "lte" | "between" | "outside";
+            operator: "lt" | "gt" | "eq" | "lte" | "gte" | "between" | "outside";
             duration?: number | undefined;
         };
         timeConstraints?: {
@@ -633,7 +633,7 @@ export declare const AutomationRuleSchema: z.ZodObject<{
         type: "and" | "or" | "not";
         rules: {
             metric: string;
-            operator: "gt" | "lt" | "eq" | "gte" | "lte" | "contains" | "exists";
+            operator: "lt" | "gt" | "eq" | "lte" | "gte" | "contains" | "exists";
             value?: any;
             timeWindow?: number | undefined;
         }[];
@@ -651,4 +651,3 @@ export declare const AutomationRuleSchema: z.ZodObject<{
     cooldownPeriod: number;
     lastTriggered?: Date | undefined;
 }>;
-//# sourceMappingURL=automation-engine.d.ts.map

@@ -267,19 +267,19 @@ export declare const UserProfileSchema: z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     weight: number;
     id: string;
-    fitnessGoal: "strength" | "endurance" | "weight_loss" | "muscle_gain" | "body_recomposition";
-    activityLevel: "moderately_active" | "sedentary" | "lightly_active" | "very_active" | "extremely_active";
-    height: number;
     age: number;
+    height: number;
+    fitnessGoal: "weight_loss" | "muscle_gain" | "endurance" | "strength" | "body_recomposition";
+    activityLevel: "sedentary" | "lightly_active" | "moderately_active" | "very_active" | "extremely_active";
     experience: "beginner" | "intermediate" | "advanced";
     bodyFat?: number | undefined;
 }, {
     weight: number;
     id: string;
-    fitnessGoal: "strength" | "endurance" | "weight_loss" | "muscle_gain" | "body_recomposition";
-    activityLevel: "moderately_active" | "sedentary" | "lightly_active" | "very_active" | "extremely_active";
-    height: number;
     age: number;
+    height: number;
+    fitnessGoal: "weight_loss" | "muscle_gain" | "endurance" | "strength" | "body_recomposition";
+    activityLevel: "sedentary" | "lightly_active" | "moderately_active" | "very_active" | "extremely_active";
     experience: "beginner" | "intermediate" | "advanced";
     bodyFat?: number | undefined;
 }>;
@@ -303,4 +303,3 @@ export declare const MacroTargetsSchema: z.ZodObject<{
     fiber: number;
 }>;
 export {};
-//# sourceMappingURL=plan-generators.d.ts.map

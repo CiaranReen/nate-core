@@ -24,6 +24,15 @@ import {
   ContextualInsights,
 } from "./smart-memory";
 
+import { MemoryPersistenceService, IMemoryPersistenceProvider } from "./services/MemoryPersistenceService";
+import { NateScoringEngine } from "./services/NateScoringEngine";
+import { PlanTemplateGenerator } from "./services/PlanTemplateGenerator";
+import { VisualizationService } from "./services/VisualizationService";
+import { PrivacyManager } from "./services/PrivacyManager";
+import { CacheService, CacheConfig } from "./services/CacheService";
+import { PlanTemplateService } from "./services/PlanTemplateService";
+import { PlanLibraryService } from "./services/PlanLibraryService";
+
 import {
   PlanGenerationEngine,
   MacroTargets,
@@ -153,10 +162,49 @@ export class NateAICore {
   private automationEngine: AutomationEngine;
   private openaiService?: OpenAIService;
 
-  constructor(config: NateAIConfig) {
+    constructor(config: NateAIConfig) {
     this.config = config;
     this.adaptationEngine = new AdaptationEngine();
-    this.smartMemoryEngine = new SmartMemoryEngine();
+
+    // Initialize SmartMemoryEngine with required services
+    // Create cache configuration
+    const cacheConfig: CacheConfig = {
+      url: process.env.REDIS_URL || "redis://localhost:6379",
+      token: process.env.REDIS_TOKEN || "",
+      ttl: 86400
+    };
+
+    // Create service instances
+    const cacheService = new CacheService(cacheConfig);
+
+    // Create stub persistence provider
+    const persistenceProvider: IMemoryPersistenceProvider = {
+      saveMemoryProfile: async () => {},
+      loadMemoryProfile: async () => null,
+      saveReinforcementProfile: async () => {},
+      loadReinforcementProfile: async () => null,
+      savePrivacySettings: async () => {},
+      loadPrivacySettings: async () => null,
+      deleteUserData: async () => {}
+    };
+
+    const memoryPersistence = new MemoryPersistenceService(persistenceProvider, cacheService);
+    const scoringEngine = new NateScoringEngine();
+    const visualizationService = new VisualizationService();
+    const planTemplateService = new PlanTemplateService(cacheConfig, cacheService);
+    const planLibraryService = new PlanLibraryService();
+    const planGenerator = new PlanTemplateGenerator(planTemplateService, visualizationService, planLibraryService);
+    const privacyManager = new PrivacyManager("default-encryption-key");
+
+    this.smartMemoryEngine = new SmartMemoryEngine(
+      memoryPersistence,
+      scoringEngine,
+      planGenerator,
+      visualizationService,
+      privacyManager,
+      cacheService
+    );
+
     this.planGenerationEngine = new PlanGenerationEngine();
     this.dataCollectionEngine = new DataCollectionEngine();
     this.automationEngine = new AutomationEngine();

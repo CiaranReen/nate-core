@@ -127,4 +127,3 @@ export declare class OpenAIService {
         temperature?: number;
     }): AsyncGenerator<string, void, unknown>;
 }
-//# sourceMappingURL=openai.d.ts.map

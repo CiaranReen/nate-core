@@ -122,34 +122,34 @@ export declare const UserProfileSchema: z.ZodObject<{
     weight: number;
     id: string;
     name: string;
-    fitnessGoal: "strength" | "endurance" | "weight_loss" | "muscle_gain" | "general_fitness";
-    activityLevel: "moderately_active" | "sedentary" | "lightly_active" | "very_active" | "extremely_active";
-    height: number;
     age: number;
-    experience: "beginner" | "intermediate" | "advanced";
+    height: number;
+    fitnessGoal: "weight_loss" | "muscle_gain" | "endurance" | "strength" | "general_fitness";
+    activityLevel: "sedentary" | "lightly_active" | "moderately_active" | "very_active" | "extremely_active";
     workoutFrequency: number;
     workoutDuration: number;
     dietaryRestrictions: string[];
     allergies: string[];
     equipment: string[];
-    preferences?: string[] | undefined;
+    experience: "beginner" | "intermediate" | "advanced";
     injuries?: string[] | undefined;
+    preferences?: string[] | undefined;
 }, {
     weight: number;
     id: string;
     name: string;
-    fitnessGoal: "strength" | "endurance" | "weight_loss" | "muscle_gain" | "general_fitness";
-    activityLevel: "moderately_active" | "sedentary" | "lightly_active" | "very_active" | "extremely_active";
-    height: number;
     age: number;
-    experience: "beginner" | "intermediate" | "advanced";
+    height: number;
+    fitnessGoal: "weight_loss" | "muscle_gain" | "endurance" | "strength" | "general_fitness";
+    activityLevel: "sedentary" | "lightly_active" | "moderately_active" | "very_active" | "extremely_active";
     workoutFrequency: number;
     workoutDuration: number;
     dietaryRestrictions: string[];
     allergies: string[];
     equipment: string[];
-    preferences?: string[] | undefined;
+    experience: "beginner" | "intermediate" | "advanced";
     injuries?: string[] | undefined;
+    preferences?: string[] | undefined;
 }>;
 export declare const ConversationContextSchema: z.ZodObject<{
     userId: z.ZodString;
@@ -159,13 +159,13 @@ export declare const ConversationContextSchema: z.ZodObject<{
         content: z.ZodString;
         timestamp: z.ZodDate;
     }, "strip", z.ZodTypeAny, {
-        timestamp: Date;
         role: "user" | "assistant";
         content: string;
+        timestamp: Date;
     }, {
-        timestamp: Date;
         role: "user" | "assistant";
         content: string;
+        timestamp: Date;
     }>, "many">;
     currentTopic: z.ZodOptional<z.ZodEnum<["fitness", "nutrition", "motivation", "general"]>>;
     userMood: z.ZodOptional<z.ZodNumber>;
@@ -175,15 +175,15 @@ export declare const ConversationContextSchema: z.ZodObject<{
         duration: z.ZodNumber;
         completed: z.ZodBoolean;
     }, "strip", z.ZodTypeAny, {
+        completed: boolean;
         type: string;
         date: Date;
         duration: number;
-        completed: boolean;
     }, {
+        completed: boolean;
         type: string;
         date: Date;
         duration: number;
-        completed: boolean;
     }>>;
     recentProgress: z.ZodOptional<z.ZodObject<{
         weight: z.ZodOptional<z.ZodNumber>;
@@ -202,17 +202,17 @@ export declare const ConversationContextSchema: z.ZodObject<{
     userId: string;
     conversationId: string;
     messageHistory: {
-        timestamp: Date;
         role: "user" | "assistant";
         content: string;
+        timestamp: Date;
     }[];
-    currentTopic?: "nutrition" | "motivation" | "fitness" | "general" | undefined;
+    currentTopic?: "fitness" | "nutrition" | "motivation" | "general" | undefined;
     userMood?: number | undefined;
     lastWorkout?: {
+        completed: boolean;
         type: string;
         date: Date;
         duration: number;
-        completed: boolean;
     } | undefined;
     recentProgress?: {
         weight?: number | undefined;
@@ -223,17 +223,17 @@ export declare const ConversationContextSchema: z.ZodObject<{
     userId: string;
     conversationId: string;
     messageHistory: {
-        timestamp: Date;
         role: "user" | "assistant";
         content: string;
+        timestamp: Date;
     }[];
-    currentTopic?: "nutrition" | "motivation" | "fitness" | "general" | undefined;
+    currentTopic?: "fitness" | "nutrition" | "motivation" | "general" | undefined;
     userMood?: number | undefined;
     lastWorkout?: {
+        completed: boolean;
         type: string;
         date: Date;
         duration: number;
-        completed: boolean;
     } | undefined;
     recentProgress?: {
         weight?: number | undefined;
@@ -241,4 +241,3 @@ export declare const ConversationContextSchema: z.ZodObject<{
         achievements?: string[] | undefined;
     } | undefined;
 }>;
-//# sourceMappingURL=prompt-builders.d.ts.map

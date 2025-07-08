@@ -8,7 +8,7 @@
   "types": "dist/index.d.ts",
   "private": false,
   "scripts": {
-    "build": "bun build",
+    "build": "tsc",
     "dev": "tsc --watch",
     "lint": "eslint . --ext .ts",
     "test": "jest"

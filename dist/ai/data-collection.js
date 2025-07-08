@@ -309,4 +309,3 @@ export const AnonymizedDataPointSchema = z.object({
         tags: z.array(z.string()),
     }),
 });
-//# sourceMappingURL=data-collection.js.map

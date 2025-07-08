@@ -6,4 +6,14 @@ export { PlanGenerationEngine, MacroTargets, WorkoutPlan as GeneratedWorkoutPlan
 export { DataCollectionEngine, DataCollectionConsent, DataType, AnonymizedDataPoint, DemographicCluster, DataMetadata, PlanEffectivenessData, TrainingDataset, PlanLibrary, PlanTemplate, AdaptationStrategy, FailurePattern, BestPractice, Innovation, DataCollectionConsentSchema, AnonymizedDataPointSchema, } from "./data-collection";
 export { AutomationEngine, WearableDevice, DeviceType, WearableDataType, DevicePermission, DeviceSettings, WearableDataPoint, AutomationRule, AutomationTrigger, AutomationCondition, AutomationAction, SmartIntervention, InterventionType, ProactiveCoaching, PerformancePrediction, ProactiveRecommendation, PlanOptimization, WearableDeviceSchema, AutomationRuleSchema, } from "./automation-engine";
 export { NateAICore, NateAIConfig, NateAIResponse, NateAIState, EnhancedContext, ConversationMessage, EnvironmentalFactors, CurrentPlans, RecoveryPlan, GoalPlan, Milestone, RecentData, } from "./nate-ai-core";
-//# sourceMappingURL=index.d.ts.map
+export * from "./services";
+export { CacheService } from "./services/CacheService";
+export { PlanTemplateService } from "./services/PlanTemplateService";
+export { PlanTemplateGenerator } from "./services/PlanTemplateGenerator";
+export { PlanLibraryService } from "./services/PlanLibraryService";
+export { VisualizationService } from "./services/VisualizationService";
+export { MemoryPersistenceService } from "./services/MemoryPersistenceService";
+export { PrivacyManager } from "./services/PrivacyManager";
+export { NateScoringEngine } from "./services/NateScoringEngine";
+export * from "./services/OpenAI";
+export * from "./interfaces";

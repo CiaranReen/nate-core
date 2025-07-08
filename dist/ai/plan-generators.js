@@ -337,4 +337,3 @@ export const MacroTargetsSchema = z.object({
     fat: z.number().min(20).max(200),
     fiber: z.number().min(20).max(80),
 });
-//# sourceMappingURL=plan-generators.js.map

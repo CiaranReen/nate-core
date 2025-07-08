@@ -160,4 +160,3 @@ export declare class SupabaseService {
     batchCreateWorkoutPlans(workoutPlans: Omit<WorkoutPlan, "id" | "created_at" | "updated_at">[]): Promise<WorkoutPlan[]>;
     getClient(): SupabaseClient<any, "public", any>;
 }
-//# sourceMappingURL=supabase.d.ts.map

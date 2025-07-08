@@ -114,4 +114,3 @@ export declare class NateAICore {
     handleMissedWorkout(userId: string, workoutId: string): Promise<void>;
     private checkForAdaptations;
 }
-//# sourceMappingURL=nate-ai-core.d.ts.map

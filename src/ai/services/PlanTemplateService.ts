@@ -488,7 +488,7 @@ export class PlanTemplateService {
       profile.fitnessLevel,
       ...profile.fitnessGoals,
       profile.personalityProfile.motivationType,
-      profile.behaviorPatterns.recoveryProfile.optimalFrequency,
+      profile.behaviorPatterns.motivationCycles.averageCycleDuration,
     ];
     return `plan:${keyParts.join(":")}`;
   }

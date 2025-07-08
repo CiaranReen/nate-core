@@ -13,6 +13,14 @@
  */
 import { AdaptationEngine, } from "./adaptation-engine";
 import { SmartMemoryEngine, } from "./smart-memory";
+import { MemoryPersistenceService } from "./services/MemoryPersistenceService";
+import { NateScoringEngine } from "./services/NateScoringEngine";
+import { PlanTemplateGenerator } from "./services/PlanTemplateGenerator";
+import { VisualizationService } from "./services/VisualizationService";
+import { PrivacyManager } from "./services/PrivacyManager";
+import { CacheService } from "./services/CacheService";
+import { PlanTemplateService } from "./services/PlanTemplateService";
+import { PlanLibraryService } from "./services/PlanLibraryService";
 import { PlanGenerationEngine, } from "./plan-generators";
 import { DataCollectionEngine } from "./data-collection";
 import { AutomationEngine, } from "./automation-engine";
@@ -21,7 +29,33 @@ export class NateAICore {
     constructor(config) {
         this.config = config;
         this.adaptationEngine = new AdaptationEngine();
-        this.smartMemoryEngine = new SmartMemoryEngine();
+        // Initialize SmartMemoryEngine with required services
+        // Create cache configuration
+        const cacheConfig = {
+            url: process.env.REDIS_URL || "redis://localhost:6379",
+            token: process.env.REDIS_TOKEN || "",
+            ttl: 86400
+        };
+        // Create service instances
+        const cacheService = new CacheService(cacheConfig);
+        // Create stub persistence provider
+        const persistenceProvider = {
+            saveMemoryProfile: async () => { },
+            loadMemoryProfile: async () => null,
+            saveReinforcementProfile: async () => { },
+            loadReinforcementProfile: async () => null,
+            savePrivacySettings: async () => { },
+            loadPrivacySettings: async () => null,
+            deleteUserData: async () => { }
+        };
+        const memoryPersistence = new MemoryPersistenceService(persistenceProvider, cacheService);
+        const scoringEngine = new NateScoringEngine();
+        const visualizationService = new VisualizationService();
+        const planTemplateService = new PlanTemplateService(cacheConfig, cacheService);
+        const planLibraryService = new PlanLibraryService();
+        const planGenerator = new PlanTemplateGenerator(planTemplateService, visualizationService, planLibraryService);
+        const privacyManager = new PrivacyManager("default-encryption-key");
+        this.smartMemoryEngine = new SmartMemoryEngine(memoryPersistence, scoringEngine, planGenerator, visualizationService, privacyManager, cacheService);
         this.planGenerationEngine = new PlanGenerationEngine();
         this.dataCollectionEngine = new DataCollectionEngine();
         this.automationEngine = new AutomationEngine();
@@ -168,4 +202,3 @@ export class NateAICore {
         }
     }
 }
-//# sourceMappingURL=nate-ai-core.js.map

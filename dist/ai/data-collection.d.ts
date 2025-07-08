@@ -295,15 +295,15 @@ export declare const DataCollectionConsentSchema: z.ZodObject<{
     consentVersion: z.ZodString;
 }, "strip", z.ZodTypeAny, {
     userId: string;
-    dataTypes: ("workout_performance" | "nutrition_adherence" | "biometric_changes" | "mood_wellness" | "adaptation_responses" | "plan_effectiveness" | "user_feedback" | "behavioral_patterns")[];
     consentGiven: boolean;
     consentDate: Date;
+    dataTypes: ("workout_performance" | "nutrition_adherence" | "biometric_changes" | "mood_wellness" | "adaptation_responses" | "plan_effectiveness" | "user_feedback" | "behavioral_patterns")[];
     consentVersion: string;
 }, {
     userId: string;
-    dataTypes: ("workout_performance" | "nutrition_adherence" | "biometric_changes" | "mood_wellness" | "adaptation_responses" | "plan_effectiveness" | "user_feedback" | "behavioral_patterns")[];
     consentGiven: boolean;
     consentDate: Date;
+    dataTypes: ("workout_performance" | "nutrition_adherence" | "biometric_changes" | "mood_wellness" | "adaptation_responses" | "plan_effectiveness" | "user_feedback" | "behavioral_patterns")[];
     consentVersion: string;
 }>;
 export declare const AnonymizedDataPointSchema: z.ZodObject<{
@@ -319,18 +319,18 @@ export declare const AnonymizedDataPointSchema: z.ZodObject<{
         activityLevel: z.ZodString;
         region: z.ZodString;
     }, "strip", z.ZodTypeAny, {
+        fitnessGoal: string;
+        activityLevel: string;
         ageRange: string;
         experienceLevel: "beginner" | "intermediate" | "advanced";
-        fitnessGoal: string;
         bodyTypeCluster: string;
-        activityLevel: string;
         region: string;
     }, {
+        fitnessGoal: string;
+        activityLevel: string;
         ageRange: string;
         experienceLevel: "beginner" | "intermediate" | "advanced";
-        fitnessGoal: string;
         bodyTypeCluster: string;
-        activityLevel: string;
         region: string;
     }>;
     data: z.ZodAny;
@@ -342,59 +342,58 @@ export declare const AnonymizedDataPointSchema: z.ZodObject<{
         tags: z.ZodArray<z.ZodString, "many">;
     }, "strip", z.ZodTypeAny, {
         confidence: number;
-        collectionMethod: "user_input" | "automatic" | "derived";
+        collectionMethod: "derived" | "automatic" | "user_input";
         qualityScore: number;
-        validationStatus: "validated" | "pending" | "rejected";
+        validationStatus: "pending" | "validated" | "rejected";
         tags: string[];
     }, {
         confidence: number;
-        collectionMethod: "user_input" | "automatic" | "derived";
+        collectionMethod: "derived" | "automatic" | "user_input";
         qualityScore: number;
-        validationStatus: "validated" | "pending" | "rejected";
+        validationStatus: "pending" | "validated" | "rejected";
         tags: string[];
     }>;
 }, "strip", z.ZodTypeAny, {
+    id: string;
+    timestamp: Date;
     metadata: {
         confidence: number;
-        collectionMethod: "user_input" | "automatic" | "derived";
+        collectionMethod: "derived" | "automatic" | "user_input";
         qualityScore: number;
-        validationStatus: "validated" | "pending" | "rejected";
+        validationStatus: "pending" | "validated" | "rejected";
         tags: string[];
     };
-    id: string;
-    dataType: "workout_performance" | "nutrition_adherence" | "biometric_changes" | "mood_wellness" | "adaptation_responses" | "plan_effectiveness" | "user_feedback" | "behavioral_patterns";
     anonymizedUserId: string;
     demographicCluster: {
+        fitnessGoal: string;
+        activityLevel: string;
         ageRange: string;
         experienceLevel: "beginner" | "intermediate" | "advanced";
-        fitnessGoal: string;
         bodyTypeCluster: string;
-        activityLevel: string;
         region: string;
     };
-    timestamp: Date;
+    dataType: "workout_performance" | "nutrition_adherence" | "biometric_changes" | "mood_wellness" | "adaptation_responses" | "plan_effectiveness" | "user_feedback" | "behavioral_patterns";
     data?: any;
 }, {
+    id: string;
+    timestamp: Date;
     metadata: {
         confidence: number;
-        collectionMethod: "user_input" | "automatic" | "derived";
+        collectionMethod: "derived" | "automatic" | "user_input";
         qualityScore: number;
-        validationStatus: "validated" | "pending" | "rejected";
+        validationStatus: "pending" | "validated" | "rejected";
         tags: string[];
     };
-    id: string;
-    dataType: "workout_performance" | "nutrition_adherence" | "biometric_changes" | "mood_wellness" | "adaptation_responses" | "plan_effectiveness" | "user_feedback" | "behavioral_patterns";
     anonymizedUserId: string;
     demographicCluster: {
+        fitnessGoal: string;
+        activityLevel: string;
         ageRange: string;
         experienceLevel: "beginner" | "intermediate" | "advanced";
-        fitnessGoal: string;
         bodyTypeCluster: string;
-        activityLevel: string;
         region: string;
     };
-    timestamp: Date;
+    dataType: "workout_performance" | "nutrition_adherence" | "biometric_changes" | "mood_wellness" | "adaptation_responses" | "plan_effectiveness" | "user_feedback" | "behavioral_patterns";
     data?: any;
 }>;
 export {};
-//# sourceMappingURL=data-collection.d.ts.map

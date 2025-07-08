@@ -568,21 +568,21 @@ export declare const UserMetricsSchema: z.ZodObject<{
         exercises: z.ZodArray<z.ZodAny, "many">;
         progressionRate: z.ZodNumber;
     }, "strip", z.ZodTypeAny, {
-        type: "strength" | "cardio" | "hiit" | "flexibility" | "hybrid";
         id: string;
+        type: "strength" | "cardio" | "hiit" | "flexibility" | "hybrid";
+        duration: number;
         intensity: number;
         volume: number;
         frequency: number;
-        duration: number;
         exercises: any[];
         progressionRate: number;
     }, {
-        type: "strength" | "cardio" | "hiit" | "flexibility" | "hybrid";
         id: string;
+        type: "strength" | "cardio" | "hiit" | "flexibility" | "hybrid";
+        duration: number;
         intensity: number;
         volume: number;
         frequency: number;
-        duration: number;
         exercises: any[];
         progressionRate: number;
     }>;
@@ -596,20 +596,20 @@ export declare const UserMetricsSchema: z.ZodObject<{
         strengthGains: z.ZodRecord<z.ZodString, z.ZodNumber>;
         cardioGains: z.ZodRecord<z.ZodString, z.ZodNumber>;
     }, "strip", z.ZodTypeAny, {
-        streak: number;
         weeklyConsistency: number;
-        monthlyConsistency: number;
+        streak: number;
+        strengthGains: Record<string, number>;
         totalWorkouts: number;
         averageRating: number;
-        strengthGains: Record<string, number>;
+        monthlyConsistency: number;
         cardioGains: Record<string, number>;
     }, {
-        streak: number;
         weeklyConsistency: number;
-        monthlyConsistency: number;
+        streak: number;
+        strengthGains: Record<string, number>;
         totalWorkouts: number;
         averageRating: number;
-        strengthGains: Record<string, number>;
+        monthlyConsistency: number;
         cardioGains: Record<string, number>;
     }>;
     biometrics: z.ZodObject<{
@@ -632,6 +632,7 @@ export declare const UserMetricsSchema: z.ZodObject<{
     }, "strip", z.ZodTypeAny, {
         lastUpdated: Date;
         weight?: number | undefined;
+        measurements?: Record<string, number> | undefined;
         bodyFat?: number | undefined;
         muscleMass?: number | undefined;
         restingHeartRate?: number | undefined;
@@ -639,10 +640,10 @@ export declare const UserMetricsSchema: z.ZodObject<{
             systolic: number;
             diastolic: number;
         } | undefined;
-        measurements?: Record<string, number> | undefined;
     }, {
         lastUpdated: Date;
         weight?: number | undefined;
+        measurements?: Record<string, number> | undefined;
         bodyFat?: number | undefined;
         muscleMass?: number | undefined;
         restingHeartRate?: number | undefined;
@@ -650,7 +651,6 @@ export declare const UserMetricsSchema: z.ZodObject<{
             systolic: number;
             diastolic: number;
         } | undefined;
-        measurements?: Record<string, number> | undefined;
     }>;
     lifestyle: z.ZodObject<{
         sleepHours: z.ZodNumber;
@@ -661,19 +661,19 @@ export declare const UserMetricsSchema: z.ZodObject<{
         nutritionCompliance: z.ZodNumber;
         hydration: z.ZodNumber;
     }, "strip", z.ZodTypeAny, {
+        stressLevel: number;
         sleepHours: number;
         sleepQuality: number;
-        stressLevel: number;
-        energyLevel: number;
         workload: number;
+        energyLevel: number;
         nutritionCompliance: number;
         hydration: number;
     }, {
+        stressLevel: number;
         sleepHours: number;
         sleepQuality: number;
-        stressLevel: number;
-        energyLevel: number;
         workload: number;
+        energyLevel: number;
         nutritionCompliance: number;
         hydration: number;
     }>;
@@ -684,43 +684,51 @@ export declare const UserMetricsSchema: z.ZodObject<{
         anxiety: z.ZodNumber;
         recentTrend: z.ZodEnum<["improving", "stable", "declining"]>;
     }, "strip", z.ZodTypeAny, {
-        score: number;
         motivation: number;
         confidence: number;
-        anxiety: number;
         recentTrend: "improving" | "stable" | "declining";
+        score: number;
+        anxiety: number;
     }, {
-        score: number;
         motivation: number;
         confidence: number;
-        anxiety: number;
         recentTrend: "improving" | "stable" | "declining";
+        score: number;
+        anxiety: number;
     }>;
 }, "strip", z.ZodTypeAny, {
     userId: string;
+    mood: {
+        motivation: number;
+        confidence: number;
+        recentTrend: "improving" | "stable" | "declining";
+        score: number;
+        anxiety: number;
+    };
     currentPlan: {
-        type: "strength" | "cardio" | "hiit" | "flexibility" | "hybrid";
         id: string;
+        type: "strength" | "cardio" | "hiit" | "flexibility" | "hybrid";
+        duration: number;
         intensity: number;
         volume: number;
         frequency: number;
-        duration: number;
         exercises: any[];
         progressionRate: number;
     };
     recentWorkouts: any[];
     progressData: {
-        streak: number;
         weeklyConsistency: number;
-        monthlyConsistency: number;
+        streak: number;
+        strengthGains: Record<string, number>;
         totalWorkouts: number;
         averageRating: number;
-        strengthGains: Record<string, number>;
+        monthlyConsistency: number;
         cardioGains: Record<string, number>;
     };
     biometrics: {
         lastUpdated: Date;
         weight?: number | undefined;
+        measurements?: Record<string, number> | undefined;
         bodyFat?: number | undefined;
         muscleMass?: number | undefined;
         restingHeartRate?: number | undefined;
@@ -728,49 +736,49 @@ export declare const UserMetricsSchema: z.ZodObject<{
             systolic: number;
             diastolic: number;
         } | undefined;
-        measurements?: Record<string, number> | undefined;
     };
     lifestyle: {
+        stressLevel: number;
         sleepHours: number;
         sleepQuality: number;
-        stressLevel: number;
-        energyLevel: number;
         workload: number;
+        energyLevel: number;
         nutritionCompliance: number;
         hydration: number;
-    };
-    mood: {
-        score: number;
-        motivation: number;
-        confidence: number;
-        anxiety: number;
-        recentTrend: "improving" | "stable" | "declining";
     };
 }, {
     userId: string;
+    mood: {
+        motivation: number;
+        confidence: number;
+        recentTrend: "improving" | "stable" | "declining";
+        score: number;
+        anxiety: number;
+    };
     currentPlan: {
-        type: "strength" | "cardio" | "hiit" | "flexibility" | "hybrid";
         id: string;
+        type: "strength" | "cardio" | "hiit" | "flexibility" | "hybrid";
+        duration: number;
         intensity: number;
         volume: number;
         frequency: number;
-        duration: number;
         exercises: any[];
         progressionRate: number;
     };
     recentWorkouts: any[];
     progressData: {
-        streak: number;
         weeklyConsistency: number;
-        monthlyConsistency: number;
+        streak: number;
+        strengthGains: Record<string, number>;
         totalWorkouts: number;
         averageRating: number;
-        strengthGains: Record<string, number>;
+        monthlyConsistency: number;
         cardioGains: Record<string, number>;
     };
     biometrics: {
         lastUpdated: Date;
         weight?: number | undefined;
+        measurements?: Record<string, number> | undefined;
         bodyFat?: number | undefined;
         muscleMass?: number | undefined;
         restingHeartRate?: number | undefined;
@@ -778,24 +786,15 @@ export declare const UserMetricsSchema: z.ZodObject<{
             systolic: number;
             diastolic: number;
         } | undefined;
-        measurements?: Record<string, number> | undefined;
     };
     lifestyle: {
+        stressLevel: number;
         sleepHours: number;
         sleepQuality: number;
-        stressLevel: number;
-        energyLevel: number;
         workload: number;
+        energyLevel: number;
         nutritionCompliance: number;
         hydration: number;
     };
-    mood: {
-        score: number;
-        motivation: number;
-        confidence: number;
-        anxiety: number;
-        recentTrend: "improving" | "stable" | "declining";
-    };
 }>;
 export {};
-//# sourceMappingURL=adaptation-engine.d.ts.map

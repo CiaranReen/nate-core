@@ -75,4 +75,3 @@ export declare class ContextFormatter {
      */
     static optimizeContextFor(sessionContext: SessionContext, useCase: "workout_planning" | "nutrition_advice" | "motivation" | "progress_review"): SessionContext;
 }
-//# sourceMappingURL=context-formatter.d.ts.map

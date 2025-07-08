@@ -1,4 +1,3 @@
-import { PlanTemplate } from "./PlanTemplates";
 
 export interface TrainingMetrics {
   // Adherence & Consistency

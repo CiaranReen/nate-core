@@ -490,4 +490,3 @@ export class NutritionCalculations {
         return adjustedNeeds;
     }
 }
-//# sourceMappingURL=calculations.js.map

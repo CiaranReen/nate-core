@@ -428,4 +428,3 @@ export class SupabaseService {
         return this.client;
     }
 }
-//# sourceMappingURL=supabase.js.map
