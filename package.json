@@ -1,11 +1,14 @@
 {
-  "name": "@teamnate/core",
+  "name": "@get-nate/core",
+  "author": "teamnate",
+  "license": "ISC",
   "version": "1.0.0",
   "description": "Shared utilities for Nate AI Fitness Coach",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "private": false,
   "scripts": {
-    "build": "tsc",
+    "build": "bun build",
     "dev": "tsc --watch",
     "lint": "eslint . --ext .ts",
     "test": "jest"
@@ -14,6 +17,9 @@
     "@upstash/redis": "^1.20.6",
     "openai": "^4.0.0",
     "zod": "^3.21.4"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
   "devDependencies": {
     "@types/jest": "^29.5.2",
@@ -28,11 +34,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/get-nate/core.git"
-  },
-  "author": "teamnate",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/get-nate/core/issues"
-  },
-  "homepage": "https://github.com/get-nate/core#readme"
+  }
 }
