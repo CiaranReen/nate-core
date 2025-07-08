@@ -1,5 +1,5 @@
 {
-  "name": "@get-nate/core",
+  "name": "@ciaranreen/nate-core",
   "author": "teamnate",
   "license": "ISC",
   "version": "1.0.0",
@@ -34,6 +34,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/get-nate/core.git"
+    "url": "git+https://github.com/ciaranreen/nate-core.git"
   }
 }
